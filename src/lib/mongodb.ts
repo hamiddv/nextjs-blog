@@ -1,18 +1,21 @@
-import { connect } from "mongoose";
-import User from "../models/User";
+import { connect } from 'mongoose'
+import User from '../models/User'
 
-export default function connectToDatabase(): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-        try {
-            console.log("Connecting to DB...".yellow);
-            connect(process.env.MONGO_URI as string)
-                .then(async () => {
-                    console.log("Connected to DB!".green);
-                    resolve();
-                })
-                .catch((reason: any) => reject(reason));
-        } catch (error) {
-            reject(error);
-        }
-    });
+let isConnected = false
+
+export default async function connectToDatabase(): Promise<void> {
+    if (isConnected) {
+        console.log('Already connected to the database')
+        return
+    }
+
+    try {
+        console.log('Connecting to DB...'.yellow)
+        await connect(process.env.MONGO_URI as string)
+        isConnected = true
+        console.log('Connected to DB!'.green)
+    } catch (error) {
+        console.error('Error connecting to database:', error)
+        throw new Error('Failed to connect to database')
+    }
 }
