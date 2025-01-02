@@ -1,6 +1,5 @@
 import {FormEvent, useState} from 'react'
 import {useRouter} from 'next/router'
-import {set} from "mongoose";
 
 export default function LoginPage() {
     const [error, setError] = useState<string | null>(null)
@@ -21,13 +20,12 @@ export default function LoginPage() {
         const data = await response.json()
         console.log(data)
 
-        if (response.status === 400) {
-            setError(data.message)
-        }
 
         if (response.ok) {
             localStorage.setItem("token", data.token)
             router.push('/')
+        }else {
+            setError(data.message)
         }
     }
 
@@ -36,7 +34,7 @@ export default function LoginPage() {
 
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col justify-center items-center gap-6 w-[500px] p-8 bg-white shadow-2xl rounded-xl"
+                className="flex flex-col justify-center items-center gap-6 w-full mx-2 sm:w-[500px] md:w-[600px] xl:w-[600px] p-8 bg-white shadow-2xl rounded-xl"
             >
                 <h3 className={"text-3xl"}>Signup</h3>
                 <input

@@ -1,7 +1,8 @@
-import { FormEvent } from 'react'
-import { useRouter } from 'next/router'
+import {FormEvent, useState} from 'react'
+import {useRouter} from 'next/router'
 
 export default function LoginPage() {
+    const [error, setError] = useState<string | null>(null)
     const router = useRouter()
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -13,15 +14,18 @@ export default function LoginPage() {
 
         const response: Response = await fetch('/api/auth/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username, password}),
         })
 
         if (response.ok) {
             const data = await response.json()
             localStorage.setItem("token", data.token)
             router.push('/')
+        } else {
+            setError(data.message)
         }
+
     }
 
     return (
@@ -29,7 +33,7 @@ export default function LoginPage() {
 
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col justify-center items-center gap-6 w-[500px] p-8 bg-white bg-opacity-90 shadow-2xl rounded-xl"
+                className="flex flex-col justify-center items-center gap-6 w-full mx-2 sm:w-[500px] md:w-[600px] xl:w-[600px] p-8 bg-white bg-opacity-90 shadow-2xl rounded-xl"
             >
                 <h3 className={"text-3xl"}>Login</h3>
                 <input
@@ -46,6 +50,11 @@ export default function LoginPage() {
                     placeholder="Password"
                     required
                 />
+                {
+                    error && <span className={"text-red-500"}>
+                        {error}
+                    </span>
+                }
                 <button type="submit" className="py-3 text-xl w-full px-4 bg-blue-500 text-white rounded-xl">
                     Login
                 </button>
