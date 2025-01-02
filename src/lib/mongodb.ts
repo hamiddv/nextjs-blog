@@ -1,5 +1,6 @@
 import { connect } from 'mongoose'
-import User from '../models/User'
+import User from '@/models/User'
+import Blog from '@/models/Blog'
 
 let isConnected = false
 
