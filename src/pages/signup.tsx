@@ -1,7 +1,8 @@
 import {FormEvent, useState} from 'react'
 import {useRouter} from 'next/router'
+import Link from "next/link";
 
-export default function LoginPage() {
+export default function Signup() {
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
 
@@ -56,6 +57,7 @@ export default function LoginPage() {
                         {error}
                     </span>
                 }
+                <span>Already have an account? <Link href={"/login"} className={"text-blue-500"}>Login</Link></span>
                 <button type="submit" className="py-3 text-xl w-full px-4 bg-blue-500 text-white rounded-xl">
                     Signup
                 </button>

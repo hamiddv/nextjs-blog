@@ -3,11 +3,6 @@ import Link from "next/link";
 
 export const Header = () => {
     const token = useToken();
-
-    if (token === null) {
-            return <p>Loading...</p>;
-        }
-
     return (
         <header className={"py-4"}>
             <div className={"container mx-auto"}>
@@ -30,7 +25,7 @@ export const Header = () => {
                                 </div>
                             </>
                         ) : (
-                            <div>
+                            <div className={"flex gap-2 "}>
                                 <div>
                                     <button>
                                         <Link href={"/login"}

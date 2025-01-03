@@ -1,12 +1,14 @@
 import {FormEvent, useState} from 'react'
 import {useRouter} from 'next/router'
 import useToken from "@/hooks/useToken";
+import {redirect} from "next/navigation";
 
 export default function CreateBlog() {
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
 
     const token = useToken()
+    console.log(token)
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -23,14 +25,14 @@ export default function CreateBlog() {
             },
             body: JSON.stringify({title, content}),
         })
-        const data = await response.json()
-        console.log(data)
-
 
         if (response.ok) {
-            localStorage.setItem("token", data.token)
-            // router.push('/')
+            router.push('/blogs')
+
+        } else if (response.status === 401) {
+            router.push("/login")
         } else {
+        const data = await response.json()
             setError(data.message)
         }
     }
@@ -62,7 +64,7 @@ export default function CreateBlog() {
                         </span>
                     }
                     <button type="submit" className="py-3 text-xl w-full px-4 bg-blue-500 text-white rounded-xl">
-                        Signup
+                        Create
                     </button>
                 </form>
             </div>

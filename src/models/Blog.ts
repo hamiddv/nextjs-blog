@@ -1,6 +1,7 @@
 import { Schema, model, models, Document, Types } from 'mongoose';
 
 interface IBlog extends Document {
+    id: string; // افزودن فیلد id به اینترفیس
     title: string;
     content: string;
     user: Types.ObjectId;
@@ -25,8 +26,14 @@ const BlogSchema = new Schema<IBlog>(
     },
     {
         timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
     }
 );
+
+BlogSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
 
 const Blog = models.Blog || model<IBlog>('Blog', BlogSchema);
 

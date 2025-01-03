@@ -1,5 +1,6 @@
 import {FormEvent, useState} from 'react'
 import {useRouter} from 'next/router'
+import Link from "next/link";
 
 export default function LoginPage() {
     const [error, setError] = useState<string | null>(null)
@@ -17,9 +18,9 @@ export default function LoginPage() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({username, password}),
         })
+        const data = await response.json()
 
         if (response.ok) {
-            const data = await response.json()
             localStorage.setItem("token", data.token)
             router.push('/')
         } else {
@@ -55,6 +56,8 @@ export default function LoginPage() {
                         {error}
                     </span>
                 }
+                <span>Don&#39;t have an account yet? <Link href={"/signup"}
+                                                           className={"text-blue-500"}>Signup</Link></span>
                 <button type="submit" className="py-3 text-xl w-full px-4 bg-blue-500 text-white rounded-xl">
                     Login
                 </button>
