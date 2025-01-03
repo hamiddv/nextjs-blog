@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
-import {Blog} from "@/types/Blog";
+import {BlogType} from "@/types/BlogType";
 import {router} from "next/client";
 
 export default function Blogs() {
 
-    const [blogs, setBlogs] = useState<Blog[]>([])
+    const [blogs, setBlogs] = useState<BlogType[]>([])
 
     useEffect(() => {
         fetchBlogs()
