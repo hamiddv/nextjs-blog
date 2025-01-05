@@ -1,8 +1,14 @@
 import useToken from "@/hooks/useToken";
 import Link from "next/link";
+import {useEffect} from "react";
 
 export const Header = () => {
     const token = useToken();
+
+    useEffect(() => {
+        
+    }, []);
+
     return (
         <header className={"py-4"}>
             <div className={"container mx-auto"}>

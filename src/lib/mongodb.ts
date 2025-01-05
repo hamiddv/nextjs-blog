@@ -9,10 +9,10 @@ export default async function connectToDatabase(): Promise<void> {
         console.log('Already connected to the database')
         return
     }
-
+    console.log(process.env.MONGO_URI as string || "mongodb://localhost:27017/blog")
     try {
         console.log('Connecting to DB...'.yellow)
-        await connect(process.env.MONGO_URI as string)
+        await connect(process.env.MONGO_URI as string || "mongodb://localhost:27017/blog")
         isConnected = true
         console.log('Connected to DB!'.green)
     } catch (error) {

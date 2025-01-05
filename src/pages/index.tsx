@@ -1,12 +1,35 @@
-"use client"
-import Link from "next/link";
+// Import necessary modules
 import {Header} from "@/components/Header";
+import {BlogList} from "@/components/BlogList";
+import connectToDatabase from "@/lib/mongodb";
+import Blog from "@/models/Blog";
+import {BlogType} from "@/types/BlogType";
+import Link from "next/link";
 
-export default function Home() {
+
+export async function getServerSideProps() {
+    await connectToDatabase();
+    const blogs = await Blog.find().limit(5);
+
+    return {
+        props: {
+            blogs: JSON.parse(JSON.stringify(blogs)),
+        },
+    };
+}
+
+
+export default function Home({blogs}: { blogs: BlogType[] }) {
     return (
         <>
-            <Header/>
-
+            <section>
+                <div className={"container mx-auto text-white"}>
+                    <BlogList blogs={blogs}/>
+                    <div className={"text-center mt-4"}>
+                        <Link className={"border py-2 px-4 rounded-lg"} href={"/blogs"}>see more ...</Link>
+                    </div>
+                </div>
+            </section>
         </>
-    )
+    );
 }
