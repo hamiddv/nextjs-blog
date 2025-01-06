@@ -24,8 +24,11 @@ export default function Home({blogs}: { blogs: BlogType[] }) {
         <>
             <section>
                 <div className={"container mx-auto text-white"}>
+                    <h2 className={"text-3xl text-center mt-8"}>
+                        Last Published Blogs
+                    </h2>
                     <BlogList blogs={blogs}/>
-                    <div className={"text-center mt-4"}>
+                    <div className={"text-center mt-8"}>
                         <Link className={"border py-2 px-4 rounded-lg"} href={"/blogs"}>see more ...</Link>
                     </div>
                 </div>

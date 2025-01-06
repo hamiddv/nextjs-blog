@@ -1,13 +1,21 @@
 import useToken from "@/hooks/useToken";
 import Link from "next/link";
-import {useEffect} from "react";
 
 export const Header = () => {
-    const token = useToken();
+    const [token, loaded] = useToken();
 
-    useEffect(() => {
-        
-    }, []);
+    if (!loaded) {
+        return (
+            <header className={"py-4"}>
+                <div className={"container mx-auto"}>
+                    <div className={"flex items-center justify-center"}>
+                        <div className={"animate-spin rounded-full h-8 w-8 border-t-2 border-white"}></div>
+                    </div>
+                </div>
+            </header>
+        )
+    }
+
 
     return (
         <header className={"py-4"}>
@@ -16,17 +24,21 @@ export const Header = () => {
                     {
                         token ? (
                             <>
-                                <div>
+                                <div className={"flex gap-2"}>
                                     <button>
                                         <Link href={"/profile"}
                                               className={"border text-white py-2 px-4 rounded-lg"}>Profile</Link>
+                                    </button>
+                                    <button>
+                                        <Link href={"/createBlog"}
+                                              className={"border text-white py-2 px-4 rounded-lg"}>Create Blog</Link>
                                     </button>
                                 </div>
 
                                 <div>
                                     <button>
-                                        <Link href={"/createBlog"}
-                                              className={"border text-white py-2 px-4 rounded-lg"}>Create Blog</Link>
+                                        <Link href={"/"}
+                                              className={"border text-white py-2 px-4 rounded-lg"}>Home</Link>
                                     </button>
                                 </div>
                             </>
