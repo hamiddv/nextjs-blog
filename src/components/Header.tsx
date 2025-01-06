@@ -18,7 +18,7 @@ export const Header = () => {
 
 
     return (
-        <header className={"py-4"}>
+        <header className={"py-4 px-2"}>
             <div className={"container mx-auto"}>
                 <div className={"flex items-center justify-between gap-4 text-xl"}>
                     {

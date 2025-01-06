@@ -25,16 +25,16 @@ export default function Blog() {
     }
 
     return (
-        <section className={"min-h-screen flex items-center justify-center"}>
-            <div className={"container mx-auto py-4 px-2"}>
-                <div>
+        <section>
+            <div className={"container mx-auto py-4 px-2 text-white "}>
+                <div className={"text-left text-3xl mb-16"}>
                     <h1>
                         {
                             blog?.title
                         }
                     </h1>
                 </div>
-                <div className={"whitespace-break-spaces"}>
+                <div className={"max-w-full break-words whitespace-break-spaces"}>
                     {
                         blog?.content
                     }
